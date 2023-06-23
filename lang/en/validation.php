@@ -162,11 +162,8 @@ return [
     |
     */
 
-    'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
-    ],
+    'failed_to_authunticate_this_user' => 'Failed to autunticate this user',
+    'cant_fetch_user_data' => 'Cant fetch user data',
 
     /*
     |--------------------------------------------------------------------------
