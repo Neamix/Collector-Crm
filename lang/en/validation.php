@@ -164,7 +164,7 @@ return [
 
     'failed_to_authunticate_this_user' => 'Failed to autunticate this user',
     'cant_fetch_user_data' => 'Cant fetch user data',
-
+    'not_allowed_value' => 'Not allowed value',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes
