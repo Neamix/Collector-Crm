@@ -11,14 +11,6 @@ class Student extends Model
 
     protected $fillable = ['name','grade','birthday'];
 
-    /*** Load Students Attributes */
-    public function loadAttributes()
-    {
-        return $this->attributesValues->mapWithKeys(function($attribute) {
-            return [$attribute['attribute'] => $attribute['value']];
-        })->all();
-    }
-
     /*** Filter Student Data */
     public function scopeFilter($query,$request)
     {
@@ -34,8 +26,8 @@ class Student extends Model
     }
 
     // Relations 
-    public function attributesValues()
+    public function attributes()
     {
-        return $this->morphMany(AttributeValue::class,'model');
+        return $this->belongsToMany(StudentAttributes::class,'student_values')->withPivot('value');
     }
 }

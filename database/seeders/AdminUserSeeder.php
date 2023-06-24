@@ -18,6 +18,7 @@ class AdminUserSeeder extends Seeder
         User::updateOrCreate([
             'id' => 1
         ],[
+            'id'   => 1,
             'name' => 'System Admin',
             'password' => password_hash('password',PASSWORD_BCRYPT),
             'email' => 'admin@collector.com',

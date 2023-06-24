@@ -2,8 +2,6 @@
 
 namespace App\Http\Repository\Students;
 
-use App\Http\Services\CustomFieldService;
-use App\Models\Setting;
 use App\Models\Student;
 use Prettus\Repository\Eloquent\BaseRepository;
 
@@ -14,6 +12,7 @@ class StudentRepository extends BaseRepository {
         return Student::class;
     }
 
+    /*** Upsert Student */
     public function upsertStudent($request)
     {
         return $this->updateOrCreate([
@@ -23,6 +22,7 @@ class StudentRepository extends BaseRepository {
         ]);
     }
 
+    /*** Delete Student */
     public function deleteStudent($student_id)
     {
         // Delete Relations
@@ -31,25 +31,21 @@ class StudentRepository extends BaseRepository {
         return $this->where('id',$student_id)->delete();
     }
 
+    /*** Filter Student Data */
     public function filter($request)
     {
         return Student::filter($request);
     }
 
-    public function addCustomsAttributes($name)
-    {
-        $this->addCustomField($name);
-    }
-
-    public function fillStudentAttributes($request)
-    {
+    /*** Fill Student Attributes */
+    public function fillStudentAttributes($student_id,$values)
+    {   
         // Get Student Under Action
-        $student = Student::find($request->student_id);
+        $student = $this->find($student_id);
 
-        // Fill Student Attributes
-        $this->fillAttributes($student,$request->attribute);
-
-        return $student;    
+        // Sync Attributes
+        $student->attributes()->sync($values);
+        
+        return $student;
     }
-
 }

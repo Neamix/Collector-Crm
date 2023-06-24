@@ -3,22 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Repository\Students\StudentAttributeRepository;
 use App\Http\Repository\Students\StudentRepository;
-use App\Http\Requests\AttributesSchemaRequest;
+use App\Http\Requests\StudentAttributesRequest;
 use App\Http\Requests\StudentRequest;
 use App\Http\Services\ResponseService;
-use App\Models\AttributeSchema;
-use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
     use ResponseService;
 
     public $studentRepository;
+    public $studentAttributeRepository;
 
-    public function __construct(StudentRepository $studentRepository)
+    public function __construct(StudentRepository $studentRepository,StudentAttributeRepository $studentAttributeRepository)
     {
         $this->studentRepository = $studentRepository;
+        $this->studentAttributeRepository = $studentAttributeRepository;
     }
 
     /*** Upsert Student */
@@ -60,16 +61,39 @@ class StudentController extends Controller
         ]);
     }
 
-    /*** Add Custom Field */
-    public function addCustomFields(AttributesSchemaRequest $request)
+    /*** Add Custom Attributes To Student */
+    public function upsertStudentAttributes(StudentAttributesRequest $request)
     {
-        $field = $this->studentRepository->addCustomField($request);
+        $attributes = $this->studentAttributeRepository->upsertStudentAttributes($request);
 
         return $this->response(200,[
-            'status' => SUCCESS,
+            'status'  => SUCCESS,
             'payload' => [
-                'field' => $field,
-                'model' => 'Student'
+                'attribute' => $attributes->attribute
+            ]
+        ]);
+    }
+
+    /*** Delete Student Attributes */
+    public function deleteStudentAttributes($attribute_id)
+    {
+        $this->studentAttributeRepository->deleteStudentAttributes($attribute_id);
+
+        return $this->response(200,[
+            'status'  => SUCCESS,
+        ]);
+    }
+
+    /*** Get Attribute */
+    public function getAttribute($attribute_id)
+    {
+        $attribute = $this->studentAttributeRepository->find($attribute_id);
+
+        return $this->response(200,[
+            'status'  => SUCCESS,
+            'payload' => [
+                'id' => $attribute->id,
+                'attribute' => $attribute->attribute
             ]
         ]);
     }
