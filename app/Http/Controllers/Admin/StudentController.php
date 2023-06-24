@@ -40,24 +40,10 @@ class StudentController extends Controller
     /*** Delete Student */
     public function deleteStudent($student_id)
     {
-        $this->studentRepository->delete($student_id);
+        $this->studentRepository->deleteStudent($student_id);
 
         return $this->response(200,[
             'status' => SUCCESS
-        ]);
-    }
-
-    /*** Get Specific Student */
-    public function getStudent($student_id)
-    {
-        $student = $this->studentRepository->findOne($student_id);
-        
-        return $this->response(200,[
-            'status'  => SUCCESS,
-            'payload' => [
-                'name'  => $student->name,
-                'email' => $student->email,
-            ]
         ]);
     }
 

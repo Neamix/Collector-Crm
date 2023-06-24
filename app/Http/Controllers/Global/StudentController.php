@@ -24,7 +24,7 @@ class StudentController extends Controller
     /*** List Student Attributes */
     public function attributesList()
     {
-        $result = $this->studentRepository->attributesList();
+        $result = $this->studentAttributeRepository->attributesList();
 
         return $this->response(200,[
             'status'  => SUCCESS,
@@ -42,9 +42,25 @@ class StudentController extends Controller
         return $this->response(200,[
             'status'  => SUCCESS,
             'payload' => [
-                'data' => $result,
+                'data' => $result->items(),
                 'total_pages'  => $result->lastPage(),
                 'current_page' => $result->currentPage()
+            ]
+        ]);
+    }
+
+    /*** Get Specific Student */
+    public function getStudent($student_id)
+    {
+        $student = $this->studentRepository->find($student_id);
+        
+        return $this->response(200,[
+            'status'  => SUCCESS,
+            'payload' => [
+                'name'     => $student->name,
+                'birthday' => $student->birthday,
+                'grade'    => $student->grade,
+                'attributes' => $student->attributes
             ]
         ]);
     }
@@ -52,7 +68,7 @@ class StudentController extends Controller
     /*** Fill Student Attributes */
     public function fillStudentAttributes(Request $request)
     {
-        $student = $this->studentAttributeRepository->fillStudentAttributes($request->student_id,$request->values);
+        $student = $this->studentRepository->fillStudentAttributes($request->student_id,$request->values);
 
         return $this->response(200,[
             'status'  => SUCCESS,

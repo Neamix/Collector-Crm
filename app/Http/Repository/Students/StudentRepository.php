@@ -15,7 +15,11 @@ class StudentRepository extends BaseRepository {
     /*** Upsert Student */
     public function upsertStudent($request)
     {
-        return $this->updateOrCreate([
+        return $this->updateOrCreate(
+        [
+            'id' => $request->id
+        ],
+        [
             'name' => $request->name,
             'grade' => $request->grade,
             'birthday' => $request->birthday
@@ -25,7 +29,11 @@ class StudentRepository extends BaseRepository {
     /*** Delete Student */
     public function deleteStudent($student_id)
     {
+        // Get Student Under Action
+        $student = $this->find($student_id);
+
         // Delete Relations
+        $student->attributes()->detach();
 
         // Delete Student
         return $this->where('id',$student_id)->delete();
