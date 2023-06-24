@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Global\CourseController;
 use App\Http\Controllers\Global\InstractorController;
 use App\Http\Controllers\Global\StudentController;
 use App\Http\Controllers\UserController;
@@ -37,6 +38,15 @@ Route::group(['middleware' => 'auth'],function () {
 
         Route::get('attributes/list',[InstractorController::class,'attributesList']);
         Route::post('attributes/fill',[InstractorController::class,'fillInstractorAttributes']);
+    });
+
+    // Course Routes
+    Route::group(['prefix' => 'course'],function () {
+        Route::get('list',[CourseController::class,'filter']);
+        Route::get('get/{course_id}',[CourseController::class,'getCourse']);
+
+        Route::get('attributes/list',[CourseController::class,'attributesList']);
+        Route::post('attributes/fill',[CourseController::class,'fillCourseAttributes']);
     });
     
 });

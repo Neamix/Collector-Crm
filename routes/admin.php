@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\InstractorController;
 use App\Http\Controllers\SettingContoller;
 use App\Http\Controllers\Admin\StudentController;
@@ -43,5 +44,16 @@ Route::group(['prefix' => 'instractor'],function () {
     Route::post('add/attributes',[InstractorController::class,'upsertInstractorAttributes']);
     Route::post('delete/attributes/{attribute_id}',[InstractorController::class,'deleteInstractorAttributes']);
     Route::get('get/attribute/{attribute_id}',[InstractorController::class,'getAttribute']);
+});
+
+/*** Course Routes */
+Route::group(['prefix' => 'course'],function () {
+    Route::post('upsert',[CourseController::class,'upsertCourse']);
+    Route::post('delete/{course_id}',[CourseController::class,'deleteCourse']);
+    Route::post('add/student',[CourseController::class,'addStudent']);
+
+    Route::post('add/attributes',[CourseController::class,'upsertCourseAttributes']);
+    Route::post('delete/attributes/{attribute_id}',[CourseController::class,'deleteCourseAttributes']);
+    Route::get('get/attribute/{attribute_id}',[CourseController::class,'getAttribute']);
 });
 

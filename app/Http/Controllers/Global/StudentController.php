@@ -37,7 +37,7 @@ class StudentController extends Controller
     /*** Filter All Student */
     public function filter(Request $request)
     {
-        $result = $this->studentRepository->filter($request->all())->with(['attributes'])->paginate(10);
+        $result = $this->studentRepository->filter($request->all())->with(['attributes','courses.instractor'])->paginate(10);
 
         return $this->response(200,[
             'status'  => SUCCESS,
@@ -60,7 +60,8 @@ class StudentController extends Controller
                 'name'     => $student->name,
                 'birthday' => $student->birthday,
                 'grade'    => $student->grade,
-                'attributes' => $student->attributes
+                'attributes' => $student->attributes,
+                'courses'  => $student->courses
             ]
         ]);
     }

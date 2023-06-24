@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Tymon\JWTAuth\Claims\Subject;
 
 class Instractor extends Model
 {
@@ -29,5 +30,10 @@ class Instractor extends Model
     public function attributes()
     {
         return $this->belongsToMany(InstractorAttributes::class,'instractor_values')->withPivot('value');
+    }
+
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class);
     }
 }

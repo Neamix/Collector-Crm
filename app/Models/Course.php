@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Course extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','grade','birthday'];
+    protected $fillable = ['name','subject','start_date','end_date','instractor_id'];
 
     /*** Filter Student Data */
     public function scopeFilter($query,$request)
@@ -28,11 +28,16 @@ class Student extends Model
     // Relations 
     public function attributes()
     {
-        return $this->belongsToMany(StudentAttributes::class,'student_values')->withPivot('value');
+        return $this->belongsToMany(CourseAttribute::class,'course_values')->withPivot('value');
     }
 
-    public function courses()
+    public function instractor()
     {
-        return $this->belongsToMany(Course::class)->withPivot('score');
+        return $this->belongsTo(Instractor::class);
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class);
     }
 }
