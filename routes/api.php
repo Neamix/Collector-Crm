@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Global\InstractorController;
 use App\Http\Controllers\Global\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,9 +24,19 @@ Route::group(['middleware' => 'auth'],function () {
     // Students Routes 
     Route::group(['prefix' => 'student'],function () {
         Route::get('list',[StudentController::class,'filter']);
+        Route::get('get/{student_id}',[StudentController::class,'getStudent']);
+
         Route::get('attributes/list',[StudentController::class,'attributesList']);
         Route::post('attributes/fill',[StudentController::class,'fillStudentAttributes']);
     });
 
+    // Instractor Routes
+    Route::group(['prefix' => 'instractor'],function () {
+        Route::get('list',[InstractorController::class,'filter']);
+        Route::get('get/{instractor_id}',[InstractorController::class,'getInstractor']);
+
+        Route::get('attributes/list',[InstractorController::class,'attributesList']);
+        Route::post('attributes/fill',[InstractorController::class,'fillInstractorAttributes']);
+    });
     
 });
