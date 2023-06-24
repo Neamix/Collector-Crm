@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Global\BookController;
 use App\Http\Controllers\Global\CourseController;
 use App\Http\Controllers\Global\InstractorController;
 use App\Http\Controllers\Global\StudentController;
@@ -47,6 +48,15 @@ Route::group(['middleware' => 'auth'],function () {
 
         Route::get('attributes/list',[CourseController::class,'attributesList']);
         Route::post('attributes/fill',[CourseController::class,'fillCourseAttributes']);
+    });
+
+    // Book Routes
+    Route::group(['prefix' => 'book'],function () {
+        Route::get('list',[BookController::class,'filter']);
+        Route::get('get/{book_id}',[BookController::class,'getBook']);
+
+        Route::get('attributes/list',[BookController::class,'attributesList']);
+        Route::post('attributes/fill',[BookController::class,'fillBookAttributes']);
     });
     
 });
