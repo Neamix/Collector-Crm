@@ -19,7 +19,7 @@
 
 <p>Collector CRM Models: Book Mode,Courses Mode</p>
 
-<b>Caution: You wont be able to use the route of certain mode unitl system admin activate it</b>
+<b>Caution: You wont be able to use the route of certain mode unitl system admin activate it, also you have to know that this crm api has been tested on windows only </b>
 
 <h3 id="Installation">Install</h3>
 
