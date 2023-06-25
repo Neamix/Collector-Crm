@@ -29,7 +29,11 @@ git pull https://github.com/Neamix/Collector-Crm.git
 ```
 
 2) change .env.example to .env
-3) generate jwt secret
+3) Install dependancies
+```
+php artisan composer install
+```
+5) generate jwt secret
 ```
 php artisan jwt:secret 
 ```
