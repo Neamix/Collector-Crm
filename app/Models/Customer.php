@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Book extends Model
+class Customer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','auther'];
+    protected $fillable = ['name','phone','birthday'];
 
     /*** Filter Student Data */
     public function scopeFilter($query,$request)
@@ -28,12 +28,11 @@ class Book extends Model
     // Relations 
     public function attributes()
     {
-        return $this->belongsToMany(BookAttribute::class,'book_values')->withPivot('value');
+        return $this->belongsToMany(CustomerAttribute::class,'customer_values')->withPivot('value');
     }
 
-
-    public function customers()
+    public function books()
     {
-        return $this->belongsToMany(Customer::class,'borrow');
+        return $this->belongsToMany(Book::class,'borrow');
     }
 }

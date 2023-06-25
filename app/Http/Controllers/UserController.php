@@ -61,6 +61,7 @@ class UserController extends Controller
     public function getOperator($operator_id)
     {
         $operator = $this->userRepository->findOne($operator_id);
+        
         return $this->response(200,[
             'status'  => SUCCESS,
             'payload' => [
@@ -87,9 +88,9 @@ class UserController extends Controller
         return $this->response(200,[
             'status'  => SUCCESS,
             'payload' => [
-                'data' => $result->data,
-                'total_pages'  => $result->total_pages,
-                'current_page' => $result->current_page
+                'data' => $result->items(),
+                'total_pages'  => $result->lastPage(),
+                'current_page' => $result->currentPage()
             ]
             ]);
     }

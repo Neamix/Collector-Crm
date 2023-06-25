@@ -21,7 +21,7 @@ class SettingContoller extends Controller
     /*** Change System Setting */
     public function changeSystem(SettingRequest $request)
     {
-        $this->settingRepository->changeSystem($request->type,$request->value);
+        $this->settingRepository->changeSystem($request->option,$request->value);
 
         return  $this->response(200,[
             'setting' => [

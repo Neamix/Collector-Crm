@@ -29,14 +29,29 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::middleware('api')
+            Route::middleware(['api','auth','MustBeBookStore'])
                 ->prefix('api')
-                ->group(base_path('routes/api.php'));
+                ->group(base_path('routes/BookRoutes/operator.php'));
+
+            Route::middleware(['api','MustBeAdmin','MustBeBookStore'])
+                ->prefix('api')
+                ->group(base_path('routes/BookRoutes/admin.php'));
+
+            Route::middleware(['api','MustBeAdmin'])
+                ->prefix('api')
+                ->group(base_path('routes/CourseRoutes/admin.php'));
+
+            Route::middleware(['api','auth','MustBeCourseStore'])
+                ->prefix('api')
+                ->group(base_path('routes/CourseRoutes/operator.php'));
 
             Route::middleware(['api','MustBeAdmin'])
                 ->prefix('api')
                 ->group(base_path('routes/admin.php'));
 
+            Route::middleware(['api'])
+                ->prefix('api')
+                ->group(base_path('routes/api.php'));
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));

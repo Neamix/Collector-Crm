@@ -2,12 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Setting;
 use Closure;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class MustBeAdminMiddleware
+class MustBeBookCrmMiddleware
 {
     /**
      * Handle an incoming request.
@@ -18,16 +17,13 @@ class MustBeAdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        /*** Allow only admins to access */
-        if ( Auth::check() ) {
-            if ( Auth::user()->type == ADMIN ) {
-                return $next($request);
-            }
+        $setting_type = Setting::where('option','system_type')->first();
+        if ($setting_type->value != 'book_managment_system') {
+            return response([
+                'error' => "error: System Admin has to activate book managment mode first"
+            ],403);
         }
 
-        /*** If user not admin send error */
-        return response([
-            'error' => "Unautharized: Must be admin"
-        ],403);
+        return $next($request);
     }
 }

@@ -2,10 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Setting;
 use Closure;
 use Illuminate\Http\Request;
 
-class MustBeOperatorMiddleware
+class MustBeCourseCrmMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,6 +17,14 @@ class MustBeOperatorMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        $setting_type = Setting::where('option','system_type')->first();
+
+        if ($setting_type->value != 'course_managment_system') {
+            return response([
+                'error' => "error: System Admin has to activate course managment mode first"
+            ],403);
+        }
+
         return $next($request);
     }
 }
